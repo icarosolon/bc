@@ -14,15 +14,17 @@ class CreateStepsTable extends Migration
     public function up()
     {
         Schema::create('steps', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('article_id');
+            $table->increments('id');
+            $table->integer('article_id')->unsigned();
             $table->string('title');
             $table->string('description');
             $table->string('image')->nullable();
             $table->timestamps();
-            $table->foreign('article_id')->references('id')->on('articles');
+            $table->foreign('article_id')
+                ->references('id')
+                ->on('articles')
+                ->onDelete('cascade');;
         });
-       
     }
 
     /**
