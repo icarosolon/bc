@@ -38,13 +38,12 @@
     </form>
 </div>
 
-<div class="card-footer">
-    <div class="d-flex justify-content-center links">
-        Não tem uma conta?<a href="{{ route('register') }}">Cadastre-se</a>
-    </div>
-    <div class="d-flex justify-content-center links">
-        <a href="{{ route('password.request') }}">Esqueceu sua senha?</a>
-    </div>
-</div>
+@endsection
 
+@section('footer')
+<div class="d-flex justify-content-center links">
+    Não tem uma conta?<a href="{{ route('register') }}">Cadastre-se</a>
+</div>
+<div class="d-flex justify-content-center links">
+    <a href="{{ route('password.request') }}">Esqueceu sua senha?</a>
 @endsection

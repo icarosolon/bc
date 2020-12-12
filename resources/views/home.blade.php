@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     
-                    <form action="{{ route('article.index') }}" method="post" ></form>
+                    <form action="{{ route('articles.index') }}" method="post" ></form>
                     {{ csrf_field() }}
                     
                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
