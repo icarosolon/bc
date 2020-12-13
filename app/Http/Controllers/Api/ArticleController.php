@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Api\ApiMessages;
 use App\Article;
+use App\Sector;
 
 class ArticleController extends Controller
 {
@@ -17,8 +18,8 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::orderByDesc('rank_search')
-        ->orderByDesc('rank_like')
-        ->get();
+            ->orderByDesc('rank_like')
+            ->get();
         return response()->json($articles);
     }
 
@@ -32,19 +33,23 @@ class ArticleController extends Controller
     {
         try {
             $sector = $request->input('sector_id');
-            $sector = Sector::findOrFail($sector);
-            $sector->articles()->create($request->all());
-            
-            $response = ['Status'=> 'Artigo ' . $request->input('title') . ' criado com sucesso!'];
+            if ($sector) {
+                $sector = Sector::findOrFail($sector);
+                $sector->articles()->create($request->all());
+            } else {
+                Article::create($request->all());
+            }
+
+
+            $response = ['Status' => 'Artigo ' . $request->input('title') . ' criado com sucesso!'];
             $statusCode = 201;
         } catch (\Exception $e) {
             $message = new ApiMessages($e->getMessage());
             $response = $message->getMessage();
             $statusCode = 401;
         }
-        
+
         return $response = response()->json($response, $statusCode);
-        
     }
 
     /**
@@ -58,7 +63,7 @@ class ArticleController extends Controller
         try {
             $article = Article::findOrFail($id);
             $article->rank_search++;
-            $article->update(['rank_search' => $article->rank_search]);            
+            $article->update(['rank_search' => $article->rank_search]);
             $response = $article;
             $statusCode = 200;
         } catch (\Exception $e) {
@@ -79,19 +84,19 @@ class ArticleController extends Controller
                                     ->orWhere('keywords', 'like',  '%' . $termo . '%')
                                     ->get();
              */
- 
-            $response = Article::leftJoin('documents', 'articles.id', '=', 'documents.article_id')
-            ->where('title', 'like',  '%' . $termo . '%')
-            ->orWhere('description', 'like',  '%' . $termo . '%')
-            ->orWhere('keywords', 'like',  '%' . $termo . '%')
-            ->get();
 
-            $statusCode = 200; 
+            $response = Article::leftJoin('documents', 'articles.id', '=', 'documents.article_id')
+                ->where('title', 'like',  '%' . $termo . '%')
+                ->orWhere('description', 'like',  '%' . $termo . '%')
+                ->orWhere('keywords', 'like',  '%' . $termo . '%')
+                ->get();
+
+            $statusCode = 200;
         } catch (\Exception $e) {
             $message = new ApiMessages($e->getMessage());
             $response = $message->getMessage();
             $statusCode = 406;
-        }finally{
+        } finally {
             return response()->json($response, $statusCode);
         }
     }

@@ -15,14 +15,14 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('sector_id')->unsigned();
+            $table->integer('sector_id')->unsigned()->nullable();
             $table->string('title');
             $table->text('description');
-            $table->string('keywords');
+            $table->string('keywords')->nullable();
             $table->unsignedBigInteger('rank_search')->nullable();
             $table->unsignedBigInteger('rank_like')->nullable();
             $table->timestamps();
-            $table->foreign('sector_id')->references('id')->on('sectors');
+            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade');
         });
     }
 

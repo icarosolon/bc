@@ -19,7 +19,7 @@ class CreateDocumentsTable extends Migration
             $table->string('name');
             $table->string('document');
             $table->timestamps();
-            $table->foreign('article_id')->references('id')->on('articles');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
         });
     }
 

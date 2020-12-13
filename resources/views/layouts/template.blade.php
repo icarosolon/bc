@@ -7,8 +7,8 @@
     <title>UNIBC</title>
     <!-- Bootstrap -->
     <link href="{{ asset('bootstrap/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bootstrap/bootstrap-grid.min') }}" rel="stylesheet">
-    <link href="{{ asset('bootstrap/bootstrap-reboot.min') }}" rel="stylesheet">
+    <link href="{{ asset('bootstrap/bootstrap-grid.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bootstrap/bootstrap-reboot.min.css') }}" rel="stylesheet">
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <style>
@@ -51,10 +51,11 @@
         }
 
         .social_icon{
-        position: absolute;
-        right: 20px;
-        top: -45px;
+            position: absolute;
+            right: 20px;
+            top: -45px;
         }
+            
 
         .input-group-prepend span{
         width: 50px;
@@ -107,13 +108,14 @@
     </style>
 </head>
 <body>
+    @include('partials.navbar')
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
                     <h3>@yield('title')</h3>
                     <div class="d-flex justify-content-end social_icon">
-                        <span><i class="fas fa-hospital-alt"></i></span>
+                        {{--  <span><i class="fas fa-hospital-alt"></i></span>  --}}
                         <span><i class="fas fa-brain"></i></span>
                     </div>
                 </div>
@@ -128,8 +130,9 @@
 
       <!-- jQuery -->
       <script src="{{ asset('js/app.js') }}"></script>
-      <script src="{{ asset('js/jquery-3.5.1.min') }}"></script>
-      <script src="{{ asset('js/bootstrap.bundle.min') }}"></script>
-      <script src="{{ asset('js/bootstrap.min') }}"></script>
+      <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
+      <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+      <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+      <script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>

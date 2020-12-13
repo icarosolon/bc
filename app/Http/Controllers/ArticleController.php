@@ -13,12 +13,17 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::orderByDesc('rank_search')
-            ->orderByDesc('rank_like')
-            ->get();
-        return view('articles.index', compact('articles'));
+        $search = $request->get('search');
+        if ($search)
+            /* $articles = Article::orderByDesc('rank_search')
+            ->orderByDesc('rank_like')->paginate(5); */
+            $articles = Article::where('title', $request->input('search'))->get();
+        else
+            $articles = $articles = Article::orderByDesc('rank_search')
+                ->orderByDesc('rank_like')->get();
+        return view('articles.index', compact('articles', 'search'));
     }
 
     /**
@@ -28,7 +33,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('articles.create');
     }
 
     /**
@@ -39,13 +44,21 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $sector = $request->input('sector_id');
-        $sector = Sector::findOrFail($sector);
-        $sector->articles()->create($request->all());
-        $response =  'Artigo ' . $request->input('title') . ' criado com sucesso!';
-
+        try {
+            $sector = $request->input('sector_id');
+            if ($sector) {
+                $sector = Sector::findOrFail($sector);
+                $sector->articles()->create($request->all());
+            } else {
+                Article::create($request->all());
+            }
+            $response =  'Artigo ' . $request->input('title') . ' criado com sucesso!';
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            $response = $message;
+        }
         $request->session()->flash('success', $response);
-        return redirect()->back();
+        return redirect()->route('articles.index');
     }
 
     /**

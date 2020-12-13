@@ -15,11 +15,11 @@ class CreateSectorsTable extends Migration
     {
         Schema::create('sectors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('unit_id')->unsigned();
+            $table->integer('unit_id')->unsigned()->nullable();
             $table->string('name');
             $table->string('description')->nullable();
             $table->timestamps();
-            $table->foreign('unit_id')->references('id')->on('units');
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });
     }
 

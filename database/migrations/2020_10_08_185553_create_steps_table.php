@@ -15,7 +15,7 @@ class CreateStepsTable extends Migration
     {
         Schema::create('steps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('article_id')->unsigned();
+            $table->integer('article_id')->unsigned()->nullable();
             $table->string('title');
             $table->string('description');
             $table->string('image')->nullable();
