@@ -291,10 +291,10 @@ $( document ).ready(function() {
       req.send(null);
 
     //ocultando a pesquisa quando aperta a tecla ESC
-      $("#search_article").keyup(function(e){
-        let esc = 27;
+      $("#search_article").keyup(function(e){//verifica cada tecla pressionada
+        let esc = 27;//código da tecla esc
         if(e.keyCode === esc){
-          clickToClose( self ); 
+          clickToClose( self ); //chama a função que oculta
         }
       });
 
