@@ -45,11 +45,14 @@
 	<div class="marshall-container">
 		<div class="marshall-col-6 marshall-middle-6 marshall-col-content">
 			<div class="marshall-logo fadeIn fast">
-				<img src="images/logo.png" alt="">
+				<img src="{{ asset('bc/images/logo.png') }}" alt="">
 			</div>
 			<div class="marshall-content jquery-center">
-			 
-				 <input type="text" class="pesquisa_input" placeholder="Do que precisa?" autofocus /> <!--  -->
+                <form id="search_article">
+                    <input type="text" class="pesquisa_input" placeholder="Do que precisa?" autofocus /> <!--  -->
+                    <input type="submit" hidden>
+                </form>
+				 
 			 
 			</div>
 

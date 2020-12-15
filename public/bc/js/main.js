@@ -208,16 +208,15 @@ function clickToClose($this){
 
 
 $( document ).ready(function() {
- 
-
-  $(".pesquisa_input").keyup(function(e){
+  //função é chamada sempre que o formulário é enviado
+  $("#search_article").submit(function(e){
 
     e.preventDefault();
     var self = $(this);
     var valor = $(".pesquisa_input").val();
     
 
-    if($(".pesquisa_input").val() != ''){ 
+    if(valor != ''){ 
       var req;
 
       if(window.XMLHttpRequest) {
@@ -229,11 +228,11 @@ $( document ).ready(function() {
     
       
       //URL para uso local
-      var url = "http://localhost/unibc/public/api/articles/search/"+valor;
+      var url = "http://127.0.0.1:8000/api/articles/search/"+valor;
       var urlDownload = "http://127.0.0.1:8000/api/document/download/";
      
       //URLs para uso em outros computadores
-     /*  var url = "http://192.168.16.8/unibc/public/api/articles/search/"+valor;
+      /* var url = "http://192.168.16.8/unibc/public/api/articles/search/"+valor;
       var urlDownload = "http://192.168.16.8/unibc/public/api/document/download/"; */
 
       // Chamada do método open para processar a requisição
@@ -241,6 +240,7 @@ $( document ).ready(function() {
       //Adiciona cabeçalhos
       req.setRequestHeader('Content-Type', 'application/json');
       req.setRequestHeader('Access-Control-Allow-Origin', '*');
+      req.setRequestHeader('Retry-After', '3600');//definindo tempo que o usuário pode fazer requisições para o servidor
     
       // Quando o objeto recebe o retorno, chamamos a seguinte função;
       req.onreadystatechange = function() {
@@ -289,6 +289,14 @@ $( document ).ready(function() {
         }
       }
       req.send(null);
+
+    //ocultando a pesquisa quando aperta a tecla ESC
+      $("#search_article").keyup(function(e){
+        let esc = 27;
+        if(e.keyCode === esc){
+          clickToClose( self ); 
+        }
+      });
 
       if(window.matchMedia("(min-width: 1025px)").matches){
         clickToSlide( self ); 
