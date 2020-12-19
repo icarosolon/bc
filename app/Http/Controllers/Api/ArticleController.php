@@ -85,7 +85,8 @@ class ArticleController extends Controller
                                     ->get();
              */
 
-            //$termo = str_replace(' ', '/', $termo ); //trocando contrabarra por barra. Segundo parametro pega o resultado
+            $termo = str_replace(' ', '%', $termo ); //trocando contrabarra por barra. Segundo parametro pega o resultado
+            
 
             $response = Article::leftJoin('documents', 'articles.id', '=', 'documents.article_id')
                 ->where('title', 'like',  '%' . $termo . '%')
