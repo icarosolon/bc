@@ -103,7 +103,9 @@ class ArticleController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Article::findOrFail($id)->delete();
+        $article = Article::findOrFail($id);
+        $article->documents()->delete();
+        $article->delete();
         $request->session()->flash('success', 'Artigo Deletado com sucesso!');
         return redirect()->back();
     }

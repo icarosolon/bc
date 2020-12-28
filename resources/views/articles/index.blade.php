@@ -36,7 +36,7 @@
                     <td>
                         <div>
                             <a class="btn float-left btn-light btn-sm" href="#" title="Editar"><i class="fas fa-edit"></i></a>&nbsp
-                            <a class="btn float-left btn-info btn-sm" href="#" title="Adicionar Documento"><i class="fas fa-plus-circle"></i></a>
+                            <a class="btn float-left btn-info btn-sm" href="{{ route('documents.create', ['id' => $article->id]) }}" title="Adicionar Documento"><i class="fas fa-plus-circle"></i></a>
                             <form id="form_article_destroy{{ $article->id }}" action="{{ route('articles.destroy', $article->id) }}" method="post" style="display:none">
                                 {{ csrf_field() }}
 
